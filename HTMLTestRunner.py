@@ -192,7 +192,7 @@ class Template_mixin(object):
         0: u'通过',
         1: u'失败',
         2: u'错误',
-        3:u'跳过',
+        3: u'跳过',
     }
 
     DEFAULT_TITLE = 'Unit Test Report'
@@ -207,6 +207,7 @@ class Template_mixin(object):
 <head>
     <title>%(title)s</title>
     <meta name="generator" content="%(generator)s"/>
+    <h3 style="color:blue">各位好，本次自动化测试已执行完毕，进一步了解执行详情请双击打开附件进行查看，如有问题请及时沟通。谢谢！</h3>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     %(stylesheet)s
 </head>
@@ -949,7 +950,7 @@ class _TestResult(TestResult):
             sys.stderr.write('K')
 
 class HTMLTestRunner(Template_mixin):
-    def __init__(self, stream=sys.stdout, verbosity=1, title=None, description=None,is_thread=False, retry=0,save_last_try=True):
+    def __init__(self, stream=sys.stdout, verbosity=2, title=None, description=None,is_thread=False, retry=0,save_last_try=True):
         self.stream = stream
         self.retry = retry
         self.is_thread=is_thread
@@ -994,11 +995,10 @@ class HTMLTestRunner(Template_mixin):
                 rmap[cls] = []
                 classes.append(cls)
             rmap[cls].append((n, t, o, e))
-        for cls in classes:
-            rmap[cls].sort(key=cmp_to_key(lambda a,b:1 if a[1].id()>b[1].id() else ( 1 if a[1].id()==b[1].id() else -1)))
+        #for cls in classes:
+        #    rmap[cls].sort(key=cmp_to_key(lambda a,b:1 if a[1].id()>b[1].id() else ( 1 if a[1].id()==b[1].id() else -1)))
         r = [(cls, rmap[cls]) for cls in classes]
-        # name = t.id().split('.')[-1]
-        r.sort(key=cmp_to_key(lambda a, b: 1 if a[0].__name__ > b[0].__name__ else -1))
+        # r.sort(key=cmp_to_key(lambda a, b: 1 if a[0].__name__ > b[0].__name__ else -1))
         return r
 
     def getReportAttributes(self, result):

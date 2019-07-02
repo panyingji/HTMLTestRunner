@@ -1029,8 +1029,8 @@ class HTMLTestRunner(Template_mixin):
             status = 'none'
         return [
             (u'开始时间', startTime),
-            (u'耗时', duration),
-            (u'状态', status),
+            (u'执行耗时', duration),
+            (u'执行结果', status),
         ]
 
     def generateReport(self, test, result):
@@ -1190,7 +1190,7 @@ class HTMLTestRunner(Template_mixin):
                     tmp+=""" <img src="data:image/jpg;base64,%s" style="display: none;" class="img"/>\n""" % img
             imgs = self.IMG_TMPL % dict(imgs=tmp)
         else:
-            imgs = u"""无截图"""
+            imgs = u"""暂无截图"""
 
         row = tmpl % dict(
             tid=tid,
